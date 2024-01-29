@@ -1,9 +1,6 @@
+import Canvas from "./components/Canvas";
 import "./style.css";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <p>
-     Hello World!
-    </p>
-  </div>
-`;
+const app = document.querySelector<HTMLDivElement>("#app")!;
+
+const { canvas, ctx, image} = new Canvas(app, './beach.jpg');
