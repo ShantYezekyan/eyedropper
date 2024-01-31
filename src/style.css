@@ -3,6 +3,18 @@
   padding: 0;
 }
 
+.toggle-btn {
+  padding: 10px;
+  margin: 20px;
+  border-radius: 8px;
+  background-color: rgb(113, 244, 244);
+  border: none;
+}
+
+.toggle-btn:active {
+  background-color: rgb(87, 207, 207);
+}
+
 .canvas-container {
   position: relative;
   width: 720px;
@@ -22,7 +34,7 @@
   border: 10px solid;
   pointer-events: none;
   outline: 4px solid white;
-  -webkit-box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.50);
-  -moz-box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.50);
-  box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.50);
+  -webkit-box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.5);
 }

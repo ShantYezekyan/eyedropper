@@ -30,11 +30,11 @@ export class EyeDropper {
     this.eyeDropper.style.borderColor = rgb;
   };
 
-  public show() {
+  public show = () => {
     this.eyeDropper.style.display = "block";
   }
 
-  public hide() {
+  public hide = () => {
     this.eyeDropper.style.display = "none";
   }
 }

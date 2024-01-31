@@ -3,6 +3,13 @@ import { EyeDropper } from "./components/EyeDropper";
 import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
+
+const toggleButton = document.createElement("button");
+toggleButton.setAttribute("class", "toggle-btn");
+toggleButton.textContent = "Toggle Eyedropper";
+app.appendChild(toggleButton);
+let eyeDropperIsActive = false;
+
 const canvasContainer = document.createElement("div");
 canvasContainer.setAttribute("class", "canvas-container");
 app.appendChild(canvasContainer);
@@ -34,11 +41,25 @@ function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
   };
 }
 
-canvas.addEventListener("mousemove", (e) => {
+function handleMouseMove(e: MouseEvent) {
   const { x, y } = getMousePosition(canvas, e);
   eyeDropperModule.updateEyeDropperPosition(x, y);
-  eyeDropperModule.updateEyeDropperColor(ctx, x, y)
-});
+  const { data } = ctx.getImageData(x, y, 1, 1);
+  const rgb = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+  eyeDropper.style.borderColor = rgb;
+}
 
-canvas.addEventListener("mouseenter", () => eyeDropperModule.show());
-canvas.addEventListener("mouseleave", () => eyeDropperModule.hide());
+toggleButton.addEventListener("click", toggleEyeDropper);
+
+function toggleEyeDropper() {
+  eyeDropperIsActive = !eyeDropperIsActive;
+  if (eyeDropperIsActive) {
+    canvas.addEventListener("mouseenter", eyeDropperModule.show);
+    canvas.addEventListener("mouseleave", eyeDropperModule.hide);
+    canvas.addEventListener("mousemove", handleMouseMove);
+  } else {
+    canvas.removeEventListener("mouseenter", eyeDropperModule.show);
+    canvas.removeEventListener("mouseleave", eyeDropperModule.hide);
+    canvas.removeEventListener("mousemove", handleMouseMove);
+  }
+}
