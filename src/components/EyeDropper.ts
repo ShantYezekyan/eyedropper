@@ -20,6 +20,16 @@ export class EyeDropper {
     }px -${y * this.zoomFactor - this.eyeDropper.offsetHeight / 2}px`;
   };
 
+  public updateEyeDropperColor = (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number
+  ) => {
+    const { data } = ctx.getImageData(x, y, 1, 1);
+    const rgb = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+    this.eyeDropper.style.borderColor = rgb;
+  };
+
   public show() {
     this.eyeDropper.style.display = "block";
   }

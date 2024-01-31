@@ -8,7 +8,7 @@ canvasContainer.setAttribute("class", "canvas-container");
 app.appendChild(canvasContainer);
 
 const canvasModule = new Canvas(canvasContainer);
-const eyeDropperModule = new EyeDropper(canvasContainer);
+const eyeDropperModule = new EyeDropper(canvasContainer, 4);
 const { canvas, ctx } = canvasModule;
 const { eyeDropper, zoomFactor } = eyeDropperModule;
 
@@ -37,6 +37,7 @@ function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
 canvas.addEventListener("mousemove", (e) => {
   const { x, y } = getMousePosition(canvas, e);
   eyeDropperModule.updateEyeDropperPosition(x, y);
+  eyeDropperModule.updateEyeDropperColor(ctx, x, y)
 });
 
 canvas.addEventListener("mouseenter", () => eyeDropperModule.show());

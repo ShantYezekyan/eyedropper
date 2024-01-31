@@ -5,11 +5,13 @@ export class Canvas {
   constructor(parentElement: HTMLElement) {
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", "canvas");
-    const ctx = canvas.getContext("2d", { colorSpace: "srgb" })!;
+    const ctx = canvas.getContext("2d", {
+      colorSpace: "srgb",
+      willReadFrequently: true,
+    })!;
 
     this.canvas = canvas;
     this.ctx = ctx;
     parentElement.appendChild(canvas);
   }
 }
-
