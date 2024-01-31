@@ -45,9 +45,7 @@ function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
 function handleMouseMove(e: MouseEvent) {
   const { x, y } = getMousePosition(canvas, e);
   eyeDropperModule.updateEyeDropperPosition(x, y);
-  const { data } = ctx.getImageData(x, y, 1, 1);
-  const rgb = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
-  eyeDropper.style.borderColor = rgb;
+  eyeDropperModule.updateEyeDropperColorData(ctx, x, y);
 }
 
 function toggleEyeDropper() {
