@@ -8,6 +8,7 @@ const toggleButton = document.createElement("button");
 toggleButton.setAttribute("class", "toggle-btn");
 toggleButton.textContent = "Toggle Eyedropper";
 app.appendChild(toggleButton);
+
 let eyeDropperIsActive = false;
 
 const canvasContainer = document.createElement("div");
@@ -49,17 +50,19 @@ function handleMouseMove(e: MouseEvent) {
   eyeDropper.style.borderColor = rgb;
 }
 
-toggleButton.addEventListener("click", toggleEyeDropper);
-
 function toggleEyeDropper() {
   eyeDropperIsActive = !eyeDropperIsActive;
   if (eyeDropperIsActive) {
+    canvas.style.cursor = "none";
     canvas.addEventListener("mouseenter", eyeDropperModule.show);
     canvas.addEventListener("mouseleave", eyeDropperModule.hide);
     canvas.addEventListener("mousemove", handleMouseMove);
   } else {
+    canvas.style.cursor = "default";
     canvas.removeEventListener("mouseenter", eyeDropperModule.show);
     canvas.removeEventListener("mouseleave", eyeDropperModule.hide);
     canvas.removeEventListener("mousemove", handleMouseMove);
   }
 }
+
+toggleButton.addEventListener("click", toggleEyeDropper);
