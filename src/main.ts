@@ -31,10 +31,13 @@ image.onload = () => {
 };
 
 function resizeCanvas() {
+  // Calculate device pixel ratio (necessary for high dpi screens, 1 is standard)
+  const dpr = window.devicePixelRatio || 1; 
   const containerWidth = canvasContainer.clientWidth;
   const containerHeight = canvasContainer.clientHeight;
 
-  // Calculate new canvas dimensions
+  
+  // Calculate new canvas dimensions preserving the aspect ratio
   let newCanvasWidth, newCanvasHeight;
   if (containerWidth / containerHeight > imageAspectRatio) {
     newCanvasHeight = containerHeight;
@@ -44,11 +47,15 @@ function resizeCanvas() {
     newCanvasHeight = newCanvasWidth / imageAspectRatio;
   }
 
-  canvas.width = newCanvasWidth;
-  canvas.height = newCanvasHeight;
-  ctx.drawImage(image, 0, 0, newCanvasWidth, newCanvasHeight);
+  // Adjust canvas element size for high resolution
+  canvas.width = newCanvasWidth * dpr;
+  canvas.height = newCanvasHeight * dpr;
 
-  // Update eyedropper's background size
+  // Reset transformations and clear canvas
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+  ctx.drawImage(image, 0, 0, newCanvasWidth, newCanvasHeight);
   eyeDropper.style.backgroundSize = `${newCanvasWidth * zoomFactor}px ${
     newCanvasHeight * zoomFactor
   }px`;
