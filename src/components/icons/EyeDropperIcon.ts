@@ -4,8 +4,8 @@ export class EyeDropperIcon {
   constructor() {
     const svgNS = "http://www.w3.org/2000/svg";
     const colorPickerSVG = document.createElementNS(svgNS, "svg");
-    colorPickerSVG.setAttribute("width", "16px");
-    colorPickerSVG.setAttribute("height", "16px");
+    colorPickerSVG.setAttribute("width", "40px");
+    colorPickerSVG.setAttribute("height", "40px");
     colorPickerSVG.setAttribute("viewBox", "0 0 16 16");
 
     const path = document.createElementNS(svgNS, "path");

@@ -10,7 +10,7 @@ const { eyeDropperBtn } = new Menu(app);
 let eyeDropperIsActive = false;
 
 const canvasContainer = document.createElement("div");
-canvasContainer.setAttribute("class", "canvas-container");
+canvasContainer.setAttribute("class", "canvas_container");
 app.appendChild(canvasContainer);
 
 const canvasModule = new Canvas(canvasContainer);

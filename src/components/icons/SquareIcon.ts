@@ -4,7 +4,7 @@ export class SquareIcon {
   constructor() {
     const svgNS = "http://www.w3.org/2000/svg";
     const squareSVG = document.createElementNS(svgNS, "svg");
-    squareSVG.setAttribute("class", "square-svg");
+    squareSVG.setAttribute("class", "square_svg");
     squareSVG.setAttribute("width", "10px");
     squareSVG.setAttribute("height", "10px");
     squareSVG.setAttribute("viewBox", "0 0 330 330");
