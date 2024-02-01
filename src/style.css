@@ -11,8 +11,6 @@
 
 #canvas {
   display: block;
-  width: 100%;
-  height: auto;
 }
 
 .toggle-btn {
@@ -30,8 +28,8 @@
 
 .canvas-container {
   position: relative;
-  flex-grow: 1;
-  width: 100vw;
+  display: block;
+  box-sizing: border-box;
 }
 
 .eyedropper {

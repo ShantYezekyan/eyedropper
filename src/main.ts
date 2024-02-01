@@ -22,48 +22,32 @@ const { eyeDropper, zoomFactor } = eyeDropperModule;
 
 const image = new Image();
 image.src = "./beach.jpg";
-let imageAspectRatio = 0;
 
 image.onload = () => {
-  imageAspectRatio = image.naturalWidth / image.naturalHeight;
   resizeCanvas();
-  eyeDropper.style.backgroundImage = `url('${canvas.toDataURL()}')`;
+  eyeDropper.style.backgroundImage = `url('${canvas.toDataURL("image/jpeg")}')`;
 };
 
 function resizeCanvas() {
-  // Calculate device pixel ratio (necessary for high dpi screens, 1 is standard)
-  const dpr = window.devicePixelRatio || 1;
-  const containerWidth = canvasContainer.clientWidth;
+  const viewportWidth = window.innerWidth;
+  // 150 is subtracted to give some space below the canvas
+  // so that the eyedropper text is visible
+  const viewportHeight = window.innerHeight - 150;
+  const imageAspectRatio = image.width / image.height;
+  let canvasWidth = viewportWidth;
+  let canvasHeight = viewportWidth / imageAspectRatio;
 
-  const buttonHeight =
-    toggleButton.offsetHeight +
-    parseFloat(window.getComputedStyle(toggleButton).marginTop) +
-    parseFloat(window.getComputedStyle(toggleButton).marginBottom);
-  const availableHeight = window.innerHeight - buttonHeight;
-
-  // Calculate new canvas dimensions preserving the aspect ratio
-  let newCanvasHeight = availableHeight,
-    newCanvasWidth = newCanvasHeight * imageAspectRatio;
-  if (newCanvasWidth > containerWidth) {
-    newCanvasWidth = containerWidth;
-    newCanvasHeight = newCanvasWidth / imageAspectRatio;
+  if (canvasHeight > viewportHeight) {
+    canvasHeight = viewportHeight;
+    canvasWidth = viewportHeight * imageAspectRatio;
   }
 
-  // Adjust canvas element size for high resolution
-  canvas.width = newCanvasWidth * dpr;
-  canvas.height = newCanvasHeight * dpr;
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
 
-  // Reset transformations and clear canvas
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Update canvas display size
-  canvas.style.width = `${newCanvasWidth}px`;
-  canvas.style.height = `${newCanvasHeight}px`;
-
-  ctx.drawImage(image, 0, 0, newCanvasWidth, newCanvasHeight);
-  eyeDropper.style.backgroundSize = `${newCanvasWidth * zoomFactor}px ${
-    newCanvasHeight * zoomFactor
+  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  eyeDropper.style.backgroundSize = `${canvasWidth * zoomFactor}px ${
+    canvasHeight * zoomFactor
   }px`;
 }
 
