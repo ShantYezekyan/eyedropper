@@ -25,13 +25,13 @@ image.src = "./beach.jpg";
 
 image.onload = () => {
   resizeCanvas();
-  eyeDropper.style.backgroundImage = `url('${canvas.toDataURL()}')`;
+  eyeDropper.style.backgroundImage = `url('${canvas.toDataURL("image/jpeg")}')`;
 };
 
 function resizeCanvas() {
   const viewportWidth = window.innerWidth;
   // 150 is subtracted to give some space below the canvas
-  // so that the eyedropper text is visible 
+  // so that the eyedropper text is visible
   const viewportHeight = window.innerHeight - 150;
   const imageAspectRatio = image.width / image.height;
   let canvasWidth = viewportWidth;
