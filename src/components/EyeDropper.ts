@@ -26,7 +26,7 @@ export class EyeDropper {
 
     const hexTextDisplay = document.createElement("div");
     hexTextDisplay.setAttribute("class", "hex-text-display");
-    
+
     squareSVG.appendChild(path);
     eyeDropper.appendChild(squareSVG);
     eyeDropper.appendChild(hexTextDisplay);
@@ -38,13 +38,16 @@ export class EyeDropper {
   }
 
   public updateEyeDropperPosition = (x: number, y: number) => {
+    const borderWidth = 10;
     const halfWidth = this.eyeDropper.offsetWidth / 2;
     const halfHeight = this.eyeDropper.offsetHeight / 2;
     this.eyeDropper.style.left = `${x - halfWidth}px`;
     this.eyeDropper.style.top = `${y - halfHeight}px`;
     this.eyeDropper.style.backgroundPosition = `-${
-      x * this.zoomFactor - this.eyeDropper.offsetWidth / 2
-    }px -${y * this.zoomFactor - this.eyeDropper.offsetHeight / 2}px`;
+      x * this.zoomFactor - this.eyeDropper.offsetWidth / 2 + borderWidth
+    }px -${
+      y * this.zoomFactor - this.eyeDropper.offsetHeight / 2 + borderWidth
+    }px`;
   };
 
   public updateEyeDropperColorData = (
