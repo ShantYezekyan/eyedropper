@@ -3,9 +3,16 @@
   padding: 0;
 }
 
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .toggle-btn {
   padding: 10px;
   margin: 20px;
+  width: 150px;
   border-radius: 8px;
   background-color: rgb(113, 244, 244);
   border: none;
@@ -17,8 +24,10 @@
 
 .canvas-container {
   position: relative;
+  flex-grow: 1;
+  height: calc(100vh - 50px);
   width: 100vw;
-  height: 100vh;
+  overflow: hidden;
 }
 
 .eyedropper {
