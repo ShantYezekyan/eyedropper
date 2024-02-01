@@ -22,23 +22,45 @@ const { eyeDropper, zoomFactor } = eyeDropperModule;
 
 const image = new Image();
 image.src = "./beach.jpg";
-const { width, height } = canvasContainer.getBoundingClientRect();
-canvas.width = width;
-canvas.height = height;
+let imageAspectRatio = 0;
 
 image.onload = () => {
-  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  imageAspectRatio = image.naturalWidth / image.naturalHeight;
+  resizeCanvas();
   eyeDropper.style.backgroundImage = `url('${canvas.toDataURL()}')`;
-  eyeDropper.style.backgroundSize = `${canvas.width * zoomFactor}px ${
-    canvas.height * zoomFactor
-  }px`;
 };
+
+function resizeCanvas() {
+  const containerWidth = canvasContainer.clientWidth;
+  const containerHeight = canvasContainer.clientHeight;
+
+  // Calculate new canvas dimensions
+  let newCanvasWidth, newCanvasHeight;
+  if (containerWidth / containerHeight > imageAspectRatio) {
+    newCanvasHeight = containerHeight;
+    newCanvasWidth = newCanvasHeight * imageAspectRatio;
+  } else {
+    newCanvasWidth = containerWidth;
+    newCanvasHeight = newCanvasWidth / imageAspectRatio;
+  }
+
+  canvas.width = newCanvasWidth;
+  canvas.height = newCanvasHeight;
+  ctx.drawImage(image, 0, 0, newCanvasWidth, newCanvasHeight);
+
+  // Update eyedropper's background size
+  eyeDropper.style.backgroundSize = `${newCanvasWidth * zoomFactor}px ${
+    newCanvasHeight * zoomFactor
+  }px`;
+}
+
+window.addEventListener("resize", resizeCanvas);
 
 function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
   const rect = canvas.getBoundingClientRect();
   return {
-    x: e.clientX - rect.left - window.scrollX,
-    y: e.clientY - rect.top - window.scrollY,
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top,
   };
 }
 

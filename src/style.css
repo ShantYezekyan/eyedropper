@@ -17,12 +17,8 @@
 
 .canvas-container {
   position: relative;
-  width: 720px;
-  height: 480px;
-}
-
-#canvas {
-  border: 1px solid #000;
+  width: 100vw;
+  height: 100vh;
 }
 
 .eyedropper {
@@ -40,6 +36,7 @@
   -webkit-box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.5);
   box-shadow: inset 0px 10px 23px 0px rgba(0, 0, 0, 0.5);
+  background-repeat: no-repeat;
 }
 
 .square-svg {
