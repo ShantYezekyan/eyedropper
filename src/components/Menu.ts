@@ -1,3 +1,4 @@
+import { EyeDropperIcon } from "./icons/EyeDropperIcon";
 export class Menu {
   eyeDropperBtn: HTMLButtonElement;
 
@@ -7,9 +8,11 @@ export class Menu {
 
     const eyeDropperBtn = document.createElement("button");
     eyeDropperBtn.setAttribute("class", "toggle-btn");
-    eyeDropperBtn.textContent = "Toggle Eyedropper";
-    menuContainer.appendChild(eyeDropperBtn);
 
+    const { eyeDropperIcon } = new EyeDropperIcon();
+
+    eyeDropperBtn.appendChild(eyeDropperIcon);
+    menuContainer.appendChild(eyeDropperBtn);
     parentElement.appendChild(menuContainer);
     this.eyeDropperBtn = eyeDropperBtn;
   }
