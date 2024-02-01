@@ -32,17 +32,19 @@ image.onload = () => {
 
 function resizeCanvas() {
   // Calculate device pixel ratio (necessary for high dpi screens, 1 is standard)
-  const dpr = window.devicePixelRatio || 1; 
+  const dpr = window.devicePixelRatio || 1;
   const containerWidth = canvasContainer.clientWidth;
-  const containerHeight = canvasContainer.clientHeight;
 
-  
+  const buttonHeight =
+    toggleButton.offsetHeight +
+    parseFloat(window.getComputedStyle(toggleButton).marginTop) +
+    parseFloat(window.getComputedStyle(toggleButton).marginBottom);
+  const availableHeight = window.innerHeight - buttonHeight;
+
   // Calculate new canvas dimensions preserving the aspect ratio
-  let newCanvasWidth, newCanvasHeight;
-  if (containerWidth / containerHeight > imageAspectRatio) {
-    newCanvasHeight = containerHeight;
+  let newCanvasHeight = availableHeight,
     newCanvasWidth = newCanvasHeight * imageAspectRatio;
-  } else {
+  if (newCanvasWidth > containerWidth) {
     newCanvasWidth = containerWidth;
     newCanvasHeight = newCanvasWidth / imageAspectRatio;
   }
@@ -54,14 +56,16 @@ function resizeCanvas() {
   // Reset transformations and clear canvas
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
- 
+
+  // Update canvas display size
+  canvas.style.width = `${newCanvasWidth}px`;
+  canvas.style.height = `${newCanvasHeight}px`;
+
   ctx.drawImage(image, 0, 0, newCanvasWidth, newCanvasHeight);
   eyeDropper.style.backgroundSize = `${newCanvasWidth * zoomFactor}px ${
     newCanvasHeight * zoomFactor
   }px`;
 }
-
-window.addEventListener("resize", resizeCanvas);
 
 function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
   const rect = canvas.getBoundingClientRect();
@@ -93,3 +97,4 @@ function toggleEyeDropper() {
 }
 
 toggleButton.addEventListener("click", toggleEyeDropper);
+window.addEventListener("resize", resizeCanvas);
