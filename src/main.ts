@@ -1,13 +1,11 @@
 import { Canvas } from "./components/Canvas";
 import { EyeDropper } from "./components/EyeDropper";
+import { Menu } from "./components/Menu";
 import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
-const toggleButton = document.createElement("button");
-toggleButton.setAttribute("class", "toggle-btn");
-toggleButton.textContent = "Toggle Eyedropper";
-app.appendChild(toggleButton);
+const { eyeDropperBtn } = new Menu(app);
 
 let eyeDropperIsActive = false;
 
@@ -80,5 +78,5 @@ function toggleEyeDropper() {
   }
 }
 
-toggleButton.addEventListener("click", toggleEyeDropper);
+eyeDropperBtn.addEventListener("click", toggleEyeDropper);
 window.addEventListener("resize", resizeCanvas);
