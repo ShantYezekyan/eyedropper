@@ -10,7 +10,7 @@ export class Menu {
   zoomMinusBtn: HTMLButtonElement;
   magnifierMinusBtn: HTMLButtonElement;
   magnifierTextDisplay: HTMLDivElement;
-  magnifierPlusBtn!: HTMLButtonElement;
+  magnifierPlusBtn: HTMLButtonElement;
 
   constructor(parentElement: HTMLElement) {
     const menuContainer = document.createElement("div");
@@ -45,10 +45,7 @@ export class Menu {
     const eyeDropperBtnContainer = document.createElement("div");
     eyeDropperBtnContainer.setAttribute("class", "eyedropper_btn-container");
     const { eyeDropperIcon } = new EyeDropperIcon();
-    const eyeDropperBtn = createButtonElement(
-      "btn",
-      eyeDropperIcon
-    );
+    const eyeDropperBtn = createButtonElement("btn", eyeDropperIcon);
     eyeDropperBtnContainer.appendChild(eyeDropperBtn);
     this.eyeDropperBtn = eyeDropperBtn;
     return eyeDropperBtnContainer;
@@ -63,8 +60,8 @@ export class Menu {
     container.setAttribute("class", elementClass);
     const { plusIcon } = new PlusIcon();
     const { minusIcon } = new MinusIcon();
-    const minusBtn = createButtonElement("btn", plusIcon);
-    const plusBtn = createButtonElement("btn", minusIcon);
+    const minusBtn = createButtonElement("btn", minusIcon);
+    const plusBtn = createButtonElement("btn", plusIcon);
     const textDisplay = document.createElement("div");
     textDisplay.setAttribute("class", displayClass);
     textDisplay.innerText = displayText;
