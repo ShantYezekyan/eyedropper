@@ -17,14 +17,8 @@ export class Menu {
     menuContainer.setAttribute("class", "menu_container");
 
     const eyeDropperBtnContainer = this.createEyeDropperToggle();
-    const zoomScaleUi = this.createEyeDropperControls(
-      "zoom_scale_ui-container",
-      "Zoom scale"
-    );
-    const magnifierSizeUi = this.createEyeDropperControls(
-      "magnifier_size_ui-container",
-      "Magnifier Size"
-    );
+    const zoomScaleUi = this.createEyeDropperControls("Zoom scale");
+    const magnifierSizeUi = this.createEyeDropperControls("Magnifier Size");
 
     menuContainer.appendChild(eyeDropperBtnContainer);
     menuContainer.appendChild(zoomScaleUi.container);
@@ -49,9 +43,9 @@ export class Menu {
     return eyeDropperBtnContainer;
   }
 
-  private createEyeDropperControls(elementClass: string, titleText: string) {
+  private createEyeDropperControls(titleText: string) {
     const container = document.createElement("div");
-    container.setAttribute("class", elementClass);
+    container.setAttribute("class", "controls-ui-container");
     const { plusIcon } = new PlusIcon();
     const { minusIcon } = new MinusIcon();
     const minusBtn = createButtonElement("btn", minusIcon);

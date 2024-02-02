@@ -16,20 +16,17 @@
   background-color: rgb(28, 28, 28);
 }
 
-.zoom_scale_ui-container {
+.controls-ui-container {
   display: flex;
   align-items: center;
   gap: 2px;
 }
-
-.magnifier_size_ui-container {
+.control-value-display {
+  padding: 6px;
+  color: white;
+  text-align: center;
   display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-#canvas {
-  display: block;
+  flex-direction: column;
 }
 
 .btn {
@@ -49,18 +46,13 @@
   background-color: rgb(205, 205, 205);
 }
 
-.control-value-display {
-  padding: 6px;
-  color: white;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+#canvas {
+  display: block;
 }
 
 .canvas_container {
-  position: relative;
   display: block;
-  box-sizing: border-box;
+  position: relative;
 }
 
 .eyedropper {
