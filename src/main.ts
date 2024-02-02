@@ -5,7 +5,12 @@ import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
-const { eyeDropperBtn } = new Menu(app);
+const {
+  eyeDropperBtn,
+  magnifierMinusBtn,
+  magnifierPlusBtn,
+  magnifierSizeValue,
+} = new Menu(app);
 
 let eyeDropperIsActive = false;
 
