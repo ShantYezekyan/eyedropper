@@ -23,7 +23,7 @@ app.appendChild(canvasContainer);
 const canvasModule = new Canvas(canvasContainer);
 const eyeDropperModule = new EyeDropper(canvasContainer);
 const { canvas, ctx, image } = canvasModule;
-const { eyeDropper, zoomFactor } = eyeDropperModule;
+const { eyeDropper } = eyeDropperModule;
 
 image.onload = () => {
   handleCanvasResize();
@@ -31,7 +31,7 @@ image.onload = () => {
 };
 
 function handleCanvasResize() {
-  canvasModule.resizeCanvas(zoomFactor, eyeDropperModule.setBackgroundSize);
+  canvasModule.resizeCanvas(eyeDropperModule.zoomScale, eyeDropperModule.setBackgroundSize);
 }
 
 function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
@@ -76,7 +76,7 @@ function handleEyeDropperClick() {
     canvas.style.cursor = "none";
     const result = eyeDropperModule.getMagnifierCurrentSize();
     MenuModule.showMagnifierSize(result);
-    MenuModule.showZoomScale(zoomFactor);
+    MenuModule.showZoomScale(eyeDropperModule.zoomScale);
     canvas.addEventListener("mouseenter", eyeDropperModule.show);
     canvas.addEventListener("mouseleave", eyeDropperModule.hide);
     canvas.addEventListener("mousemove", handleMouseMove);

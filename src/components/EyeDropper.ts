@@ -3,7 +3,7 @@ import { SquareIcon } from "./icons/SquareIcon";
 
 export class EyeDropper {
   eyeDropper: HTMLDivElement;
-  zoomFactor: number;
+  zoomScale: number;
   hexTextDisplay: HTMLDivElement;
   isActive: boolean;
 
@@ -29,7 +29,7 @@ export class EyeDropper {
 
     this.hexTextDisplay = hexTextDisplay;
     this.eyeDropper = eyeDropper;
-    this.zoomFactor = zoomFactor;
+    this.zoomScale = zoomFactor;
     this.isActive = false;
   }
 
@@ -40,9 +40,9 @@ export class EyeDropper {
     this.eyeDropper.style.left = `${x - halfWidth}px`;
     this.eyeDropper.style.top = `${y - halfHeight}px`;
     this.eyeDropper.style.backgroundPosition = `-${
-      x * this.zoomFactor - this.eyeDropper.offsetWidth / 2 + borderWidth
+      x * this.zoomScale - this.eyeDropper.offsetWidth / 2 + borderWidth
     }px -${
-      y * this.zoomFactor - this.eyeDropper.offsetHeight / 2 + borderWidth
+      y * this.zoomScale - this.eyeDropper.offsetHeight / 2 + borderWidth
     }px`;
   };
 
@@ -76,11 +76,15 @@ export class EyeDropper {
   };
 
   public increaseZoomScale() {
-    return (this.zoomFactor += 0.5);
+    return (this.zoomScale += 0.5);
   }
 
   public decreaseZoomScale() {
-    return (this.zoomFactor -= 0.5);
+    if (this.zoomScale >= 1) {
+      return (this.zoomScale -= 0.5);
+    } else {
+      return 0.5;
+    }
   }
 
   public increaseMagnifierSize = () => {
@@ -94,9 +98,14 @@ export class EyeDropper {
   public decreaseMagnifierSize = () => {
     const width = parseInt(this.eyeDropper.style.width);
     const height = parseInt(this.eyeDropper.style.height);
-    this.eyeDropper.style.width = width - 10 + "px";
-    this.eyeDropper.style.height = height - 10 + "px";
-    return width - 10 + "px";
+
+    if (width > 90) {
+      this.eyeDropper.style.width = width - 10 + "px";
+      this.eyeDropper.style.height = height - 10 + "px";
+      return width - 10 + "px";
+    } else {
+      return "90px";
+    }
   };
 
   public getMagnifierCurrentSize = () => {
@@ -111,5 +120,3 @@ export class EyeDropper {
     this.eyeDropper.style.display = "none";
   };
 }
-
-
