@@ -8,7 +8,7 @@ export class EyeDropper {
 
   constructor(
     parentElement: HTMLElement,
-    zoomFactor: number = 2,
+    zoomFactor: number = 3,
     initialMagnifierSize: number = 100
   ) {
     const eyeDropper = document.createElement("div");
@@ -58,6 +58,24 @@ export class EyeDropper {
     this.hexTextDisplay.style.color = contrast;
     this.hexTextDisplay.innerText = hex;
   };
+
+  public setBackgroundSize = (
+    canvasWidth: number,
+    canvasHeight: number,
+    zoomFactor: number
+  ) => {
+    this.eyeDropper.style.backgroundSize = `${canvasWidth * zoomFactor}px ${
+      canvasHeight * zoomFactor
+    }px`;
+  };
+
+  public increaseZoomScale() {
+    return (this.zoomFactor += 0.5);
+  }
+
+  public decreaseZoomScale() {
+    return (this.zoomFactor -= 0.5);
+  }
 
   public increaseMagnifierSize = () => {
     const width = parseInt(this.eyeDropper.style.width);

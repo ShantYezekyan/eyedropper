@@ -11,6 +11,9 @@ const {
   magnifierMinusBtn,
   magnifierPlusBtn,
   magnifierSizeValue,
+  zoomMinusBtn,
+  zoomPlusBtn,
+  zoomScaleValue,
 } = MenuModule;
 
 let eyeDropperIsActive = false;
@@ -20,7 +23,7 @@ canvasContainer.setAttribute("class", "canvas_container");
 app.appendChild(canvasContainer);
 
 const canvasModule = new Canvas(canvasContainer);
-const eyeDropperModule = new EyeDropper(canvasContainer, 4);
+const eyeDropperModule = new EyeDropper(canvasContainer);
 const { canvas, ctx } = canvasModule;
 const { eyeDropper, zoomFactor } = eyeDropperModule;
 
@@ -50,9 +53,7 @@ function resizeCanvas() {
   canvas.height = canvasHeight;
 
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-  eyeDropper.style.backgroundSize = `${canvasWidth * zoomFactor}px ${
-    canvasHeight * zoomFactor
-  }px`;
+  eyeDropperModule.setBackgroundSize(canvasWidth, canvasHeight, zoomFactor);
 }
 
 function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
@@ -79,6 +80,16 @@ function handleIncreaseMagnifierSize() {
   magnifierSizeValue.innerText = result;
 }
 
+function handleDecreaseZoomScale() {
+  const result = eyeDropperModule.decreaseZoomScale();
+  eyeDropperModule.setBackgroundSize(canvas.width, canvas.height, result);
+}
+
+function handleIncreaseZoomScale() {
+  const result = eyeDropperModule.increaseZoomScale();
+  eyeDropperModule.setBackgroundSize(canvas.width, canvas.height, result);
+}
+
 function toggleEyeDropper() {
   eyeDropperIsActive = !eyeDropperIsActive;
   if (eyeDropperIsActive) {
@@ -90,6 +101,8 @@ function toggleEyeDropper() {
     canvas.addEventListener("mousemove", handleMouseMove);
     magnifierMinusBtn.addEventListener("click", handleDecreaseMagnifierSize);
     magnifierPlusBtn.addEventListener("click", handleIncreaseMagnifierSize);
+    zoomMinusBtn.addEventListener("click", handleDecreaseZoomScale);
+    zoomPlusBtn.addEventListener("click", handleIncreaseZoomScale);
   } else {
     canvas.style.cursor = "default";
     MenuModule.hideMagnifierSize();
@@ -98,6 +111,8 @@ function toggleEyeDropper() {
     canvas.removeEventListener("mousemove", handleMouseMove);
     magnifierMinusBtn.removeEventListener("click", handleDecreaseMagnifierSize);
     magnifierPlusBtn.removeEventListener("click", handleIncreaseMagnifierSize);
+    zoomMinusBtn.removeEventListener("click", handleDecreaseZoomScale);
+    zoomPlusBtn.removeEventListener("click", handleIncreaseZoomScale);
   }
 }
 
