@@ -69,6 +69,14 @@ export class Menu {
     return { container, minusBtn, plusBtn, valueDisplay };
   }
 
+  public showZoomScale = (currentValue: number) => {
+    this.zoomScaleValue.innerText = String(currentValue);
+  };
+
+  public hideZoomScale = () => {
+    this.zoomScaleValue.innerText = "";
+  };
+
   public showMagnifierSize = (currentValue: string) => {
     this.magnifierSizeValue.innerText = currentValue;
   };

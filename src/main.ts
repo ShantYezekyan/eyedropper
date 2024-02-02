@@ -83,11 +83,13 @@ function handleIncreaseMagnifierSize() {
 function handleDecreaseZoomScale() {
   const result = eyeDropperModule.decreaseZoomScale();
   eyeDropperModule.setBackgroundSize(canvas.width, canvas.height, result);
+  zoomScaleValue.innerText = String(result);
 }
 
 function handleIncreaseZoomScale() {
   const result = eyeDropperModule.increaseZoomScale();
   eyeDropperModule.setBackgroundSize(canvas.width, canvas.height, result);
+  zoomScaleValue.innerText = String(result);
 }
 
 function toggleEyeDropper() {
@@ -96,6 +98,7 @@ function toggleEyeDropper() {
     canvas.style.cursor = "none";
     const result = eyeDropperModule.getMagnifierCurrentSize();
     MenuModule.showMagnifierSize(result);
+    MenuModule.showZoomScale(zoomFactor);
     canvas.addEventListener("mouseenter", eyeDropperModule.show);
     canvas.addEventListener("mouseleave", eyeDropperModule.hide);
     canvas.addEventListener("mousemove", handleMouseMove);
