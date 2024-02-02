@@ -19,11 +19,11 @@ export class Canvas {
     const image = new Image();
     image.src = "./beach.jpg";
 
-    this.canvasContainer = canvasContainer
+    this.canvasContainer = canvasContainer;
     this.canvas = canvas;
     this.ctx = ctx;
     this.image = image;
-    canvasContainer.appendChild(canvas)
+    canvasContainer.appendChild(canvas);
     parentElement.appendChild(canvasContainer);
   }
 
