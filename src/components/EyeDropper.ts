@@ -5,7 +5,7 @@ export class EyeDropper {
   eyeDropper: HTMLDivElement;
   zoomFactor: number;
   hexTextDisplay: HTMLDivElement;
-  
+
   constructor(
     parentElement: HTMLElement,
     zoomFactor: number = 2,
@@ -64,6 +64,7 @@ export class EyeDropper {
     const height = parseInt(this.eyeDropper.style.height);
     this.eyeDropper.style.width = width + 10 + "px";
     this.eyeDropper.style.height = height + 10 + "px";
+    return width + 10 + "px";
   };
 
   public decreaseMagnifierSize = () => {
@@ -71,6 +72,11 @@ export class EyeDropper {
     const height = parseInt(this.eyeDropper.style.height);
     this.eyeDropper.style.width = width - 10 + "px";
     this.eyeDropper.style.height = height - 10 + "px";
+    return width - 10 + "px";
+  };
+
+  public getMagnifierCurrentSize = () => {
+    return this.eyeDropper.style.width;
   };
 
   public show = () => {
@@ -81,4 +87,3 @@ export class EyeDropper {
     this.eyeDropper.style.display = "none";
   };
 }
-

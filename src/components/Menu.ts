@@ -19,13 +19,11 @@ export class Menu {
     const eyeDropperBtnContainer = this.createEyeDropperToggle();
     const zoomScaleUi = this.createEyeDropperControls(
       "zoom_scale_ui-container",
-      "Zoom scale",
-      "2"
+      "Zoom scale"
     );
     const magnifierSizeUi = this.createEyeDropperControls(
       "magnifier_size_ui-container",
-      "Magnifier Size",
-      "100px"
+      "Magnifier Size"
     );
 
     menuContainer.appendChild(eyeDropperBtnContainer);
@@ -51,11 +49,7 @@ export class Menu {
     return eyeDropperBtnContainer;
   }
 
-  private createEyeDropperControls(
-    elementClass: string,
-    titleText: string,
-    controlInitialValue: string
-  ) {
+  private createEyeDropperControls(elementClass: string, titleText: string) {
     const container = document.createElement("div");
     container.setAttribute("class", elementClass);
     const { plusIcon } = new PlusIcon();
@@ -66,7 +60,6 @@ export class Menu {
     displayContainer.setAttribute("class", "control-value-display");
     displayContainer.innerText = titleText;
     const valueDisplay = document.createElement("span");
-    valueDisplay.innerText = controlInitialValue;
 
     displayContainer.appendChild(valueDisplay);
     container.appendChild(minusBtn);
@@ -75,4 +68,12 @@ export class Menu {
 
     return { container, minusBtn, plusBtn, valueDisplay };
   }
+
+  public showMagnifierSize = (currentValue: string) => {
+    this.magnifierSizeValue.innerText = currentValue;
+  };
+
+  public hideMagnifierSize = () => {
+    this.magnifierSizeValue.innerText = "";
+  };
 }

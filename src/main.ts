@@ -5,12 +5,13 @@ import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
+const MenuModule = new Menu(app);
 const {
   eyeDropperBtn,
   magnifierMinusBtn,
   magnifierPlusBtn,
   magnifierSizeValue,
-} = new Menu(app);
+} = MenuModule;
 
 let eyeDropperIsActive = false;
 
@@ -68,18 +69,35 @@ function handleMouseMove(e: MouseEvent) {
   eyeDropperModule.updateEyeDropperColorData(ctx, x, y);
 }
 
+function handleDecreaseMagnifierSize() {
+  const result = eyeDropperModule.decreaseMagnifierSize();
+  magnifierSizeValue.innerText = result;
+}
+
+function handleIncreaseMagnifierSize() {
+  const result = eyeDropperModule.increaseMagnifierSize();
+  magnifierSizeValue.innerText = result;
+}
+
 function toggleEyeDropper() {
   eyeDropperIsActive = !eyeDropperIsActive;
   if (eyeDropperIsActive) {
     canvas.style.cursor = "none";
+    const result = eyeDropperModule.getMagnifierCurrentSize();
+    MenuModule.showMagnifierSize(result);
     canvas.addEventListener("mouseenter", eyeDropperModule.show);
     canvas.addEventListener("mouseleave", eyeDropperModule.hide);
     canvas.addEventListener("mousemove", handleMouseMove);
+    magnifierMinusBtn.addEventListener("click", handleDecreaseMagnifierSize);
+    magnifierPlusBtn.addEventListener("click", handleIncreaseMagnifierSize);
   } else {
     canvas.style.cursor = "default";
+    MenuModule.hideMagnifierSize();
     canvas.removeEventListener("mouseenter", eyeDropperModule.show);
     canvas.removeEventListener("mouseleave", eyeDropperModule.hide);
     canvas.removeEventListener("mousemove", handleMouseMove);
+    magnifierMinusBtn.removeEventListener("click", handleDecreaseMagnifierSize);
+    magnifierPlusBtn.removeEventListener("click", handleIncreaseMagnifierSize);
   }
 }
 
