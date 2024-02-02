@@ -9,7 +9,7 @@ export class EyeDropper {
 
   constructor(
     parentElement: HTMLElement,
-    zoomFactor: number = 3,
+    zoomFactor: number = 2,
     initialMagnifierSize: number = 100
   ) {
     const eyeDropper = document.createElement("div");

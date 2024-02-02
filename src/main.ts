@@ -31,11 +31,14 @@ image.onload = () => {
 };
 
 function handleCanvasResize() {
-  canvasModule.resizeCanvas(eyeDropperModule.zoomScale, eyeDropperModule.setBackgroundSize);
+  canvasModule.resizeCanvas(
+    eyeDropperModule.zoomScale,
+    eyeDropperModule.setBackgroundSize
+  );
 }
 
 function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
-  const rect = canvas.getBoundingClientRect();
+  const rect = canvasModule.canvasRect;
   return {
     x: e.clientX - rect.left,
     y: e.clientY - rect.top,

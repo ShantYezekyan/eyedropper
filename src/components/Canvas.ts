@@ -1,5 +1,6 @@
 export class Canvas {
   canvas: HTMLCanvasElement;
+  canvasRect!: DOMRect;
   ctx: CanvasRenderingContext2D;
   image: HTMLImageElement;
 
@@ -43,6 +44,7 @@ export class Canvas {
 
     this.canvas.width = canvasWidth;
     this.canvas.height = canvasHeight;
+    this.canvasRect = this.canvas.getBoundingClientRect();
 
     this.ctx.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
     setBackgroundSize(canvasWidth, canvasHeight, zoomFactor);
