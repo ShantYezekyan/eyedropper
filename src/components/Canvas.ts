@@ -1,10 +1,14 @@
+import { createDivElement } from "../helpers";
+
 export class Canvas {
   canvas: HTMLCanvasElement;
+  canvasContainer: HTMLDivElement;
   canvasRect!: DOMRect;
   ctx: CanvasRenderingContext2D;
   image: HTMLImageElement;
 
   constructor(parentElement: HTMLElement) {
+    const canvasContainer = createDivElement("canvas_container");
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", "canvas");
     const ctx = canvas.getContext("2d", {
@@ -15,10 +19,12 @@ export class Canvas {
     const image = new Image();
     image.src = "./beach.jpg";
 
+    this.canvasContainer = canvasContainer
     this.canvas = canvas;
     this.ctx = ctx;
     this.image = image;
-    parentElement.appendChild(canvas);
+    canvasContainer.appendChild(canvas)
+    parentElement.appendChild(canvasContainer);
   }
 
   public resizeCanvas = (

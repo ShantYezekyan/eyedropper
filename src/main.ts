@@ -16,13 +16,9 @@ const {
   zoomScaleValue,
 } = MenuModule;
 
-const canvasContainer = document.createElement("div");
-canvasContainer.setAttribute("class", "canvas_container");
-app.appendChild(canvasContainer);
-
-const canvasModule = new Canvas(canvasContainer);
+const canvasModule = new Canvas(app);
+const { canvasContainer, canvas, ctx, image } = canvasModule;
 const eyeDropperModule = new EyeDropper(canvasContainer);
-const { canvas, ctx, image } = canvasModule;
 const { eyeDropper } = eyeDropperModule;
 
 image.onload = () => {
