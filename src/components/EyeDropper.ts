@@ -16,6 +16,7 @@ export class EyeDropper {
     eyeDropper.style.display = "none";
     eyeDropper.style.width = initialMagnifierSize + "px";
     eyeDropper.style.height = initialMagnifierSize + "px";
+    eyeDropper.style.border = "10px solid";
 
     const hexTextDisplay = createDivElement("hex-text-display");
     const { squareIcon } = new SquareIcon();
@@ -31,7 +32,7 @@ export class EyeDropper {
   }
 
   public updateEyeDropperPosition = (x: number, y: number) => {
-    const borderWidth = 10;
+    const borderWidth = parseInt(this.eyeDropper.style.borderWidth);
     const halfWidth = this.eyeDropper.offsetWidth / 2;
     const halfHeight = this.eyeDropper.offsetHeight / 2;
     this.eyeDropper.style.left = `${x - halfWidth}px`;

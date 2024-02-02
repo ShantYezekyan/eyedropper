@@ -7,7 +7,6 @@ export class MinusIcon {
     minusSVG.setAttribute("height", "16px");
     minusSVG.setAttribute("viewBox", "0 0 16 16");
 
-    // Create the horizontal line
     const horizontalLine = document.createElementNS(svgNS, "rect");
     horizontalLine.setAttribute("x", "2");
     horizontalLine.setAttribute("y", "7");
@@ -16,7 +15,6 @@ export class MinusIcon {
     horizontalLine.setAttribute("fill", "black");
 
     minusSVG.appendChild(horizontalLine);
-
     this.minusIcon = minusSVG;
   }
 }

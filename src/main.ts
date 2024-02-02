@@ -33,7 +33,7 @@ function handleCanvasResize() {
   );
 }
 
-function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
+function getMousePosition(e: MouseEvent) {
   const rect = canvasModule.canvasRect;
   return {
     x: e.clientX - rect.left,
@@ -42,7 +42,7 @@ function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
 }
 
 function handleMouseMove(e: MouseEvent) {
-  const { x, y } = getMousePosition(canvas, e);
+  const { x, y } = getMousePosition(e);
   eyeDropperModule.updateEyeDropperPosition(x, y);
   eyeDropperModule.updateEyeDropperColorData(ctx, x, y);
 }
