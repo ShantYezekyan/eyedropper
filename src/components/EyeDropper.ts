@@ -1,25 +1,24 @@
-import { getContrastYIQ, rgbToHex } from "../helpers";
+import { getContrastYIQ, rgbToHex, createDivElement } from "../helpers";
 import { SquareIcon } from "./icons/SquareIcon";
 
 export class EyeDropper {
   eyeDropper: HTMLDivElement;
-  zoomFactor: number;
+  zoomScale: number;
   hexTextDisplay: HTMLDivElement;
+  isActive: boolean;
 
   constructor(
     parentElement: HTMLElement,
-    zoomFactor: number = 3,
+    zoomFactor: number = 2,
     initialMagnifierSize: number = 100
   ) {
-    const eyeDropper = document.createElement("div");
-    eyeDropper.setAttribute("class", "eyedropper");
+    const eyeDropper = createDivElement("eyedropper");
     eyeDropper.style.display = "none";
     eyeDropper.style.width = initialMagnifierSize + "px";
     eyeDropper.style.height = initialMagnifierSize + "px";
+    eyeDropper.style.border = "10px solid";
 
-    const hexTextDisplay = document.createElement("div");
-    hexTextDisplay.setAttribute("class", "hex-text-display");
-
+    const hexTextDisplay = createDivElement("hex-text-display");
     const { squareIcon } = new SquareIcon();
 
     eyeDropper.appendChild(squareIcon);
@@ -28,19 +27,20 @@ export class EyeDropper {
 
     this.hexTextDisplay = hexTextDisplay;
     this.eyeDropper = eyeDropper;
-    this.zoomFactor = zoomFactor;
+    this.zoomScale = zoomFactor;
+    this.isActive = false;
   }
 
   public updateEyeDropperPosition = (x: number, y: number) => {
-    const borderWidth = 10;
+    const borderWidth = parseInt(this.eyeDropper.style.borderWidth);
     const halfWidth = this.eyeDropper.offsetWidth / 2;
     const halfHeight = this.eyeDropper.offsetHeight / 2;
     this.eyeDropper.style.left = `${x - halfWidth}px`;
     this.eyeDropper.style.top = `${y - halfHeight}px`;
     this.eyeDropper.style.backgroundPosition = `-${
-      x * this.zoomFactor - this.eyeDropper.offsetWidth / 2 + borderWidth
+      x * this.zoomScale - this.eyeDropper.offsetWidth / 2 + borderWidth
     }px -${
-      y * this.zoomFactor - this.eyeDropper.offsetHeight / 2 + borderWidth
+      y * this.zoomScale - this.eyeDropper.offsetHeight / 2 + borderWidth
     }px`;
   };
 
@@ -59,6 +59,10 @@ export class EyeDropper {
     this.hexTextDisplay.innerText = hex;
   };
 
+  public toggleEyeDropper = () => {
+    this.isActive = !this.isActive;
+  };
+
   public setBackgroundSize = (
     canvasWidth: number,
     canvasHeight: number,
@@ -70,11 +74,15 @@ export class EyeDropper {
   };
 
   public increaseZoomScale() {
-    return (this.zoomFactor += 0.5);
+    return (this.zoomScale += 0.5);
   }
 
   public decreaseZoomScale() {
-    return (this.zoomFactor -= 0.5);
+    if (this.zoomScale >= 1) {
+      return (this.zoomScale -= 0.5);
+    } else {
+      return 0.5;
+    }
   }
 
   public increaseMagnifierSize = () => {
@@ -88,9 +96,14 @@ export class EyeDropper {
   public decreaseMagnifierSize = () => {
     const width = parseInt(this.eyeDropper.style.width);
     const height = parseInt(this.eyeDropper.style.height);
-    this.eyeDropper.style.width = width - 10 + "px";
-    this.eyeDropper.style.height = height - 10 + "px";
-    return width - 10 + "px";
+
+    if (width > 90) {
+      this.eyeDropper.style.width = width - 10 + "px";
+      this.eyeDropper.style.height = height - 10 + "px";
+      return width - 10 + "px";
+    } else {
+      return "90px";
+    }
   };
 
   public getMagnifierCurrentSize = () => {

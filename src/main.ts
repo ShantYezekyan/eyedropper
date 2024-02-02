@@ -16,48 +16,25 @@ const {
   zoomScaleValue,
 } = MenuModule;
 
-let eyeDropperIsActive = false;
-
-const canvasContainer = document.createElement("div");
-canvasContainer.setAttribute("class", "canvas_container");
-app.appendChild(canvasContainer);
-
-const canvasModule = new Canvas(canvasContainer);
+const canvasModule = new Canvas(app);
+const { canvasContainer, canvas, ctx, image } = canvasModule;
 const eyeDropperModule = new EyeDropper(canvasContainer);
-const { canvas, ctx } = canvasModule;
-const { eyeDropper, zoomFactor } = eyeDropperModule;
-
-const image = new Image();
-image.src = "./beach.jpg";
+const { eyeDropper } = eyeDropperModule;
 
 image.onload = () => {
-  resizeCanvas();
+  handleCanvasResize();
   eyeDropper.style.backgroundImage = `url('${canvas.toDataURL("image/jpeg")}')`;
 };
 
-function resizeCanvas() {
-  const viewportWidth = window.innerWidth;
-  // 150 is subtracted to give some space below the canvas
-  // so that the eyedropper text is visible
-  const viewportHeight = window.innerHeight - 150;
-  const imageAspectRatio = image.width / image.height;
-  let canvasWidth = viewportWidth;
-  let canvasHeight = viewportWidth / imageAspectRatio;
-
-  if (canvasHeight > viewportHeight) {
-    canvasHeight = viewportHeight;
-    canvasWidth = viewportHeight * imageAspectRatio;
-  }
-
-  canvas.width = canvasWidth;
-  canvas.height = canvasHeight;
-
-  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-  eyeDropperModule.setBackgroundSize(canvasWidth, canvasHeight, zoomFactor);
+function handleCanvasResize() {
+  canvasModule.resizeCanvas(
+    eyeDropperModule.zoomScale,
+    eyeDropperModule.setBackgroundSize
+  );
 }
 
-function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
-  const rect = canvas.getBoundingClientRect();
+function getMousePosition(e: MouseEvent) {
+  const rect = canvasModule.canvasRect;
   return {
     x: e.clientX - rect.left,
     y: e.clientY - rect.top,
@@ -65,7 +42,7 @@ function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
 }
 
 function handleMouseMove(e: MouseEvent) {
-  const { x, y } = getMousePosition(canvas, e);
+  const { x, y } = getMousePosition(e);
   eyeDropperModule.updateEyeDropperPosition(x, y);
   eyeDropperModule.updateEyeDropperColorData(ctx, x, y);
 }
@@ -92,13 +69,13 @@ function handleIncreaseZoomScale() {
   zoomScaleValue.innerText = String(result);
 }
 
-function toggleEyeDropper() {
-  eyeDropperIsActive = !eyeDropperIsActive;
-  if (eyeDropperIsActive) {
+function handleEyeDropperClick() {
+  eyeDropperModule.toggleEyeDropper();
+  if (eyeDropperModule.isActive) {
     canvas.style.cursor = "none";
     const result = eyeDropperModule.getMagnifierCurrentSize();
     MenuModule.showMagnifierSize(result);
-    MenuModule.showZoomScale(zoomFactor);
+    MenuModule.showZoomScale(eyeDropperModule.zoomScale);
     canvas.addEventListener("mouseenter", eyeDropperModule.show);
     canvas.addEventListener("mouseleave", eyeDropperModule.hide);
     canvas.addEventListener("mousemove", handleMouseMove);
@@ -120,5 +97,5 @@ function toggleEyeDropper() {
   }
 }
 
-eyeDropperBtn.addEventListener("click", toggleEyeDropper);
-window.addEventListener("resize", resizeCanvas);
+eyeDropperBtn.addEventListener("click", handleEyeDropperClick);
+window.addEventListener("resize", handleCanvasResize);

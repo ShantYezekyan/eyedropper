@@ -24,7 +24,6 @@ export class PlusIcon {
 
     plusSVG.appendChild(horizontalLine);
     plusSVG.appendChild(verticalLine);
-
     this.plusIcon = plusSVG;
   }
 }
