@@ -109,6 +109,7 @@ function toggleEyeDropper() {
   } else {
     canvas.style.cursor = "default";
     MenuModule.hideMagnifierSize();
+    MenuModule.hideZoomScale();
     canvas.removeEventListener("mouseenter", eyeDropperModule.show);
     canvas.removeEventListener("mouseleave", eyeDropperModule.hide);
     canvas.removeEventListener("mousemove", handleMouseMove);
