@@ -24,36 +24,16 @@ app.appendChild(canvasContainer);
 
 const canvasModule = new Canvas(canvasContainer);
 const eyeDropperModule = new EyeDropper(canvasContainer);
-const { canvas, ctx } = canvasModule;
+const { canvas, ctx, image } = canvasModule;
 const { eyeDropper, zoomFactor } = eyeDropperModule;
 
-const image = new Image();
-image.src = "./beach.jpg";
-
 image.onload = () => {
-  resizeCanvas();
+  handleCanvasResize();
   eyeDropper.style.backgroundImage = `url('${canvas.toDataURL("image/jpeg")}')`;
 };
 
-function resizeCanvas() {
-  const viewportWidth = window.innerWidth;
-  // 150 is subtracted to give some space below the canvas
-  // so that the eyedropper text is visible
-  const viewportHeight = window.innerHeight - 150;
-  const imageAspectRatio = image.width / image.height;
-  let canvasWidth = viewportWidth;
-  let canvasHeight = viewportWidth / imageAspectRatio;
-
-  if (canvasHeight > viewportHeight) {
-    canvasHeight = viewportHeight;
-    canvasWidth = viewportHeight * imageAspectRatio;
-  }
-
-  canvas.width = canvasWidth;
-  canvas.height = canvasHeight;
-
-  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-  eyeDropperModule.setBackgroundSize(canvasWidth, canvasHeight, zoomFactor);
+function handleCanvasResize() {
+  canvasModule.resizeCanvas(zoomFactor, eyeDropperModule.setBackgroundSize);
 }
 
 function getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
@@ -121,4 +101,4 @@ function toggleEyeDropper() {
 }
 
 eyeDropperBtn.addEventListener("click", toggleEyeDropper);
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize", handleCanvasResize);
