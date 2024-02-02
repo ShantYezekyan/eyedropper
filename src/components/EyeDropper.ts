@@ -1,4 +1,4 @@
-import { getContrastYIQ, rgbToHex } from "../helpers";
+import { getContrastYIQ, rgbToHex, createDivElement } from "../helpers";
 import { SquareIcon } from "./icons/SquareIcon";
 
 export class EyeDropper {
@@ -12,15 +12,12 @@ export class EyeDropper {
     zoomFactor: number = 2,
     initialMagnifierSize: number = 100
   ) {
-    const eyeDropper = document.createElement("div");
-    eyeDropper.setAttribute("class", "eyedropper");
+    const eyeDropper = createDivElement("eyedropper");
     eyeDropper.style.display = "none";
     eyeDropper.style.width = initialMagnifierSize + "px";
     eyeDropper.style.height = initialMagnifierSize + "px";
 
-    const hexTextDisplay = document.createElement("div");
-    hexTextDisplay.setAttribute("class", "hex-text-display");
-
+    const hexTextDisplay = createDivElement("hex-text-display");
     const { squareIcon } = new SquareIcon();
 
     eyeDropper.appendChild(squareIcon);
