@@ -5,6 +5,7 @@ export class EyeDropper {
   eyeDropper: HTMLDivElement;
   zoomFactor: number;
   hexTextDisplay: HTMLDivElement;
+  isActive: boolean;
 
   constructor(
     parentElement: HTMLElement,
@@ -29,6 +30,7 @@ export class EyeDropper {
     this.hexTextDisplay = hexTextDisplay;
     this.eyeDropper = eyeDropper;
     this.zoomFactor = zoomFactor;
+    this.isActive = false;
   }
 
   public updateEyeDropperPosition = (x: number, y: number) => {
@@ -57,6 +59,10 @@ export class EyeDropper {
     this.hexTextDisplay.style.backgroundColor = hex;
     this.hexTextDisplay.style.color = contrast;
     this.hexTextDisplay.innerText = hex;
+  };
+
+  public toggleEyeDropper = () => {
+    this.isActive = !this.isActive;
   };
 
   public setBackgroundSize = (
@@ -105,3 +111,5 @@ export class EyeDropper {
     this.eyeDropper.style.display = "none";
   };
 }
+
+

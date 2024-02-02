@@ -16,8 +16,6 @@ const {
   zoomScaleValue,
 } = MenuModule;
 
-let eyeDropperIsActive = false;
-
 const canvasContainer = document.createElement("div");
 canvasContainer.setAttribute("class", "canvas_container");
 app.appendChild(canvasContainer);
@@ -72,9 +70,9 @@ function handleIncreaseZoomScale() {
   zoomScaleValue.innerText = String(result);
 }
 
-function toggleEyeDropper() {
-  eyeDropperIsActive = !eyeDropperIsActive;
-  if (eyeDropperIsActive) {
+function handleEyeDropperClick() {
+  eyeDropperModule.toggleEyeDropper();
+  if (eyeDropperModule.isActive) {
     canvas.style.cursor = "none";
     const result = eyeDropperModule.getMagnifierCurrentSize();
     MenuModule.showMagnifierSize(result);
@@ -100,5 +98,5 @@ function toggleEyeDropper() {
   }
 }
 
-eyeDropperBtn.addEventListener("click", toggleEyeDropper);
+eyeDropperBtn.addEventListener("click", handleEyeDropperClick);
 window.addEventListener("resize", handleCanvasResize);
