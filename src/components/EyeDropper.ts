@@ -6,10 +6,16 @@ export class EyeDropper {
   zoomFactor: number;
   hexTextDisplay: HTMLDivElement;
 
-  constructor(parentElement: HTMLElement, zoomFactor: number = 2) {
+  constructor(
+    parentElement: HTMLElement,
+    zoomFactor: number = 2,
+    initialMagnifierSize: number = 100
+  ) {
     const eyeDropper = document.createElement("div");
     eyeDropper.setAttribute("class", "eyedropper");
     eyeDropper.style.display = "none";
+    eyeDropper.style.width = initialMagnifierSize + "px";
+    eyeDropper.style.height = initialMagnifierSize + "px";
 
     const hexTextDisplay = document.createElement("div");
     hexTextDisplay.setAttribute("class", "hex-text-display");
@@ -51,6 +57,26 @@ export class EyeDropper {
     this.hexTextDisplay.style.backgroundColor = hex;
     this.hexTextDisplay.style.color = contrast;
     this.hexTextDisplay.innerText = hex;
+  };
+
+  public increaseMagnifierSize = () => {
+    const width = parseInt(this.eyeDropper.style.width);
+    const height = parseInt(this.eyeDropper.style.height);
+    this.eyeDropper.style.width = width + 10 + "px";
+    this.eyeDropper.style.height = height + 10 + "px";
+    return width + 10 + "px";
+  };
+
+  public decreaseMagnifierSize = () => {
+    const width = parseInt(this.eyeDropper.style.width);
+    const height = parseInt(this.eyeDropper.style.height);
+    this.eyeDropper.style.width = width - 10 + "px";
+    this.eyeDropper.style.height = height - 10 + "px";
+    return width - 10 + "px";
+  };
+
+  public getMagnifierCurrentSize = () => {
+    return this.eyeDropper.style.width;
   };
 
   public show = () => {

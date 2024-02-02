@@ -6,10 +6,10 @@ import { createButtonElement } from "../helpers";
 export class Menu {
   eyeDropperBtn!: HTMLButtonElement;
   zoomPlusBtn: HTMLButtonElement;
-  zoomTextDisplay: HTMLDivElement;
+  zoomScaleValue: HTMLSpanElement;
   zoomMinusBtn: HTMLButtonElement;
   magnifierMinusBtn: HTMLButtonElement;
-  magnifierTextDisplay: HTMLDivElement;
+  magnifierSizeValue: HTMLSpanElement;
   magnifierPlusBtn: HTMLButtonElement;
 
   constructor(parentElement: HTMLElement) {
@@ -19,12 +19,10 @@ export class Menu {
     const eyeDropperBtnContainer = this.createEyeDropperToggle();
     const zoomScaleUi = this.createEyeDropperControls(
       "zoom_scale_ui-container",
-      "zoom_scale-display",
       "Zoom scale"
     );
     const magnifierSizeUi = this.createEyeDropperControls(
       "magnifier_size_ui-container",
-      "magnifier_size-display",
       "Magnifier Size"
     );
 
@@ -34,10 +32,10 @@ export class Menu {
     parentElement.appendChild(menuContainer);
 
     this.zoomMinusBtn = zoomScaleUi.minusBtn;
-    this.zoomTextDisplay = zoomScaleUi.textDisplay;
+    this.zoomScaleValue = zoomScaleUi.valueDisplay;
     this.zoomPlusBtn = zoomScaleUi.plusBtn;
     this.magnifierMinusBtn = magnifierSizeUi.minusBtn;
-    this.magnifierTextDisplay = magnifierSizeUi.textDisplay;
+    this.magnifierSizeValue = magnifierSizeUi.valueDisplay;
     this.magnifierPlusBtn = magnifierSizeUi.plusBtn;
   }
 
@@ -51,25 +49,31 @@ export class Menu {
     return eyeDropperBtnContainer;
   }
 
-  private createEyeDropperControls(
-    elementClass: string,
-    displayClass: string,
-    displayText: string
-  ) {
+  private createEyeDropperControls(elementClass: string, titleText: string) {
     const container = document.createElement("div");
     container.setAttribute("class", elementClass);
     const { plusIcon } = new PlusIcon();
     const { minusIcon } = new MinusIcon();
     const minusBtn = createButtonElement("btn", minusIcon);
     const plusBtn = createButtonElement("btn", plusIcon);
-    const textDisplay = document.createElement("div");
-    textDisplay.setAttribute("class", displayClass);
-    textDisplay.innerText = displayText;
+    const displayContainer = document.createElement("div");
+    displayContainer.setAttribute("class", "control-value-display");
+    displayContainer.innerText = titleText;
+    const valueDisplay = document.createElement("span");
 
+    displayContainer.appendChild(valueDisplay);
     container.appendChild(minusBtn);
-    container.appendChild(textDisplay);
+    container.appendChild(displayContainer);
     container.appendChild(plusBtn);
 
-    return { container, minusBtn, plusBtn, textDisplay };
+    return { container, minusBtn, plusBtn, valueDisplay };
   }
+
+  public showMagnifierSize = (currentValue: string) => {
+    this.magnifierSizeValue.innerText = currentValue;
+  };
+
+  public hideMagnifierSize = () => {
+    this.magnifierSizeValue.innerText = "";
+  };
 }
